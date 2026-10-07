@@ -70,6 +70,7 @@ uv run python -m rerank_eval.evaluate results/my-jev.json
 - 1 回の呼び出しごとに、最悪の費用（リクエストの UTF-8 バイト数 + 1,024 トークン、出力上限）で残額を確認してから送ります。`--max-calls` と `--max-usd` を超える前に止まります。
 - 回答は `<output>.jsonl` に一件ずつ書いてから次に進むので、途中で止めても同じ候補に二重に課金しません。
 - SDK の自動再試行は切っています（1 回の呼び出し = 1 HTTP リクエスト）。失敗した呼び出しは最悪の費用で計上し、結果に「回答なし」として残します。
+- Clef の結果（`results/clef.json`）は Scaler 本番の Clef アダプタ（Cloudflare Workers AI）経由で取得したもので、`run` は Clef への問い合わせに対応していません。採点はほかの結果と同じく API キーなしで再現できます。
 - LLM への問い合わせは、Scaler 本番の LLM フォールバックと同じ developer プロンプト・質問・厳密な JSON スキーマ（`{"useful": boolean}`）です。同梱の `gpt-6-luna-medium.json` は、本番のアダプタ経由で取得したものです。
 - 単価は 2026-10-07 時点の公開価格です（Jev 入力 $0.042/100 万トークン、gpt-6-luna 入力 $0.10・出力 $0.50、推論トークンは出力に含まれます）。
 
