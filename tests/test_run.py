@@ -70,3 +70,57 @@ def test_the_dollar_limit_stops_before_a_call_could_cross_it(
     sent = _fake(monkeypatch)
     asyncio.run(run.run(_args(tmp_path, max_usd=0.0)))
     assert sent == []
+
+
+def test_clef_uses_the_workers_ai_api_and_reads_its_noul_response(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    sent: dict[str, Any] = {}
+
+    class Response:
+        def __enter__(self) -> "Response":
+            return self
+
+        def __exit__(self, *args: Any) -> None:
+            return None
+
+        def read(self) -> bytes:
+            return json.dumps(
+                {
+                    "success": True,
+                    "result": {
+                        "answers": {"useful": {"noul": 0.7}},
+                        "usage": {"input_tokens": 400, "output_tokens": 0},
+                    },
+                }
+            ).encode()
+
+    def urlopen(request: Any, timeout: float) -> Response:
+        sent.update(
+            url=request.full_url,
+            headers=dict(request.header_items()),
+            body=json.loads(request.data),
+            timeout=timeout,
+        )
+        return Response()
+
+    monkeypatch.setattr(run, "urlopen", urlopen)
+    ask, close = run.clef_asker("clef", 5.0, "account-id", "api-token")
+    answer, usage = asyncio.run(ask({"candidate": "example"}))
+    asyncio.run(close())
+
+    assert answer == {"probability": 0.7}
+    assert usage == {"input_tokens": 400, "output_tokens": 0}
+    assert sent["url"].endswith("/accounts/account-id/ai/run/@cf/cloudflare/clef")
+    assert sent["headers"]["Authorization"] == "Bearer api-token"
+    assert sent["body"]["questions"]["useful"]["type"] == "noul"
+
+
+def test_clef_requires_its_cloudflare_credentials(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.delenv("CLOUDFLARE_ACCOUNT_ID", raising=False)
+    monkeypatch.delenv("CLOUDFLARE_API_TOKEN", raising=False)
+
+    with pytest.raises(RuntimeError, match="CLOUDFLARE_ACCOUNT_ID"):
+        asyncio.run(run.run(_args(tmp_path, implementation="clef", model="clef")))

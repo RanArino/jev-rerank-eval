@@ -62,17 +62,22 @@ LLM は確率を返さないので、Yes の候補を元の順位のまま前に
 
 ```sh
 uv sync --extra jev --extra llm
-TYPESAFE_API_KEY=... uv run python -m rerank_eval.run jev --output results/my-jev.json --max-usd 0.5
-OPENAI_API_KEY=...   uv run python -m rerank_eval.run llm --effort low --top-k 60 --output results/my-llm.json --max-usd 1
+cp .env.example .env
+# .env に、実行する実装の認証情報を設定する
+uv run --env-file .env python -m rerank_eval.run jev --output results/my-jev.json --max-usd 0.5
+uv run --env-file .env python -m rerank_eval.run clef --top-k 60 --output results/my-clef.json --max-usd 1
+uv run --env-file .env python -m rerank_eval.run llm --effort low --top-k 60 --output results/my-llm.json --max-usd 1
 uv run python -m rerank_eval.evaluate results/my-jev.json
 ```
 
+- API キーの設定場所はリポジトリ直下の `.env` です。初回に `.env.example` から作成してください。`.env` は Git の管理対象外なので、実キーをコミットしません。Jev の実行には `TYPESAFE_API_KEY`、Clef の実行には `CLOUDFLARE_API_TOKEN` と `CLOUDFLARE_ACCOUNT_ID`、LLM の実行には `OPENAI_API_KEY` が必要です。Cloudflare ダッシュボードの Workers AI で REST API を選ぶと、トークンと Account ID を取得できます。
+- 変更前は設定ファイルを読まず、シェルの環境変数だけを SDK に渡していました。具体的には `TYPESAFE_API_KEY=... uv run ... jev` または `OPENAI_API_KEY=... uv run ... llm` のように、コマンドの先頭で一時的にセットする方法です。`AsyncTypeSafeClient` と `AsyncOpenAI` はそれぞれこれらの標準環境変数を自動で読み取ります。Clef はこの変更で初めて直接実行に対応し、Cloudflare Workers AI REST API を使用します。
 - 1 回の呼び出しごとに、最悪の費用（リクエストの UTF-8 バイト数 + 1,024 トークン、出力上限）で残額を確認してから送ります。`--max-calls` と `--max-usd` を超える前に止まります。
 - 回答は `<output>.jsonl` に一件ずつ書いてから次に進むので、途中で止めても同じ候補に二重に課金しません。
 - SDK の自動再試行は切っています（1 回の呼び出し = 1 HTTP リクエスト）。失敗した呼び出しは最悪の費用で計上し、結果に「回答なし」として残します。
-- Clef の結果（`results/clef.json`）は Scaler 本番の Clef アダプタ（Cloudflare Workers AI）経由で取得したもので、`run` は Clef への問い合わせに対応していません。採点はほかの結果と同じく API キーなしで再現できます。
+- Clef の同梱結果（`results/clef.json`）は Scaler 本番の Clef アダプタ（Cloudflare Workers AI）経由で取得したものです。`run clef` は Cloudflare Workers AI REST API で同じ `state`・`noul` 質問を送ります。採点はほかの結果と同じく API キーなしで再現できます。
 - LLM への問い合わせは、Scaler 本番の LLM フォールバックと同じ developer プロンプト・質問・厳密な JSON スキーマ（`{"useful": boolean}`）です。同梱の `gpt-6-luna-medium.json` は、本番のアダプタ経由で取得したものです。
-- 単価は 2026-10-07 時点の公開価格です（Jev 入力 $0.042/100 万トークン、gpt-6-luna 入力 $0.10・出力 $0.50、推論トークンは出力に含まれます）。
+- 単価は 2026-10-07 時点の公開価格です（Jev 入力 $0.042/100 万トークン、Clef 入力 $0.24/100 万トークン、gpt-6-luna 入力 $0.10・出力 $0.50。Jev と Clef は出力課金なし、LLM の推論トークンは出力に含まれます）。
 
 ## 採点の規則
 

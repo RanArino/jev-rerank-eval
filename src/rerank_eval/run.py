@@ -1,7 +1,9 @@
 """Ask a reranker whether each frozen candidate is useful, one call at a time.
 
-    TYPESAFE_API_KEY=... python -m rerank_eval.run jev --output results/my-jev.json
-    OPENAI_API_KEY=...   python -m rerank_eval.run llm --effort medium --top-k 60 --output results/my-llm.json
+    cp .env.example .env  # Set the key for the implementation in .env.
+    uv run --env-file .env python -m rerank_eval.run jev --output results/my-jev.json
+    uv run --env-file .env python -m rerank_eval.run clef --top-k 60 --output results/my-clef.json
+    uv run --env-file .env python -m rerank_eval.run llm --effort medium --top-k 60 --output results/my-llm.json
 
 Each answer is appended to ``<output>.jsonl`` before the next call, so an interrupted
 run resumes without paying for a case twice. ``--max-calls`` and ``--max-usd`` stop the
@@ -15,10 +17,12 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import time
 from collections.abc import Awaitable, Callable
 from pathlib import Path
 from typing import Any
+from urllib.request import Request, urlopen
 
 from rerank_eval.evaluate import load
 
@@ -29,6 +33,7 @@ CRITERIA = {
 }
 PRICES = {  # USD per million tokens, checked 2026-10-07
     "jev": {"input": 0.042, "output": 0.0},
+    "clef": {"input": 0.24, "output": 0.0},
     "llm": {"input": 0.10, "output": 0.50},
 }
 # The production LLM fallback's developer prompt, verbatim.
@@ -72,6 +77,48 @@ def jev_asker(model: str, timeout: float) -> tuple[Ask, Callable[[], Awaitable[N
         }
 
     return ask, client.aclose
+
+
+def clef_asker(
+    model: str, timeout: float, account_id: str, api_token: str
+) -> tuple[Ask, Callable[[], Awaitable[None]]]:
+    if model not in ("clef", "clef-flash"):
+        raise ValueError("Clef model must be 'clef' or 'clef-flash'")
+    endpoint = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/run/@cf/cloudflare/{model}"
+
+    async def ask(state: dict[str, Any]) -> tuple[dict[str, Any], dict[str, int]]:
+        payload = {
+            "model": model,
+            "state": state,
+            "questions": {"useful": {"type": "noul", "instructions": QUESTION, "criteria": CRITERIA}},
+        }
+
+        def send() -> dict[str, Any]:
+            request = Request(
+                endpoint,
+                data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+                headers={"Authorization": f"Bearer {api_token}", "Content-Type": "application/json"},
+                method="POST",
+            )
+            with urlopen(request, timeout=timeout) as response:  # noqa: S310 - endpoint is fixed above
+                return json.loads(response.read())
+
+        response = await asyncio.to_thread(send)
+        if not response.get("success"):
+            raise RuntimeError("Clef request was unsuccessful")
+        result = response["result"]
+        usage = result.get("usage")
+        if usage is None:
+            raise RuntimeError("Clef reported no usage")
+        return {"probability": result["answers"]["useful"]["noul"]}, {
+            "input_tokens": usage["input_tokens"],
+            "output_tokens": 0,
+        }
+
+    async def close() -> None:
+        return None
+
+    return ask, close
 
 
 def llm_asker(
@@ -138,6 +185,12 @@ async def run(args: argparse.Namespace) -> dict[str, Any]:
     spent = sum(r["usd"] for r in done.values())
     if args.implementation == "jev":
         ask, close = jev_asker(args.model, args.timeout)
+    elif args.implementation == "clef":
+        account_id = os.environ.get("CLOUDFLARE_ACCOUNT_ID")
+        api_token = os.environ.get("CLOUDFLARE_API_TOKEN")
+        if not account_id or not api_token:
+            raise RuntimeError("Clef requires CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN")
+        ask, close = clef_asker(args.model, args.timeout, account_id, api_token)
     else:
         ask, close = llm_asker(args.model, args.effort, args.timeout)
     calls = len(done)
@@ -184,7 +237,7 @@ async def run(args: argparse.Namespace) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("implementation", choices=("jev", "llm"))
+    parser.add_argument("implementation", choices=("jev", "clef", "llm"))
     parser.add_argument("--model", default=None)
     parser.add_argument("--effort", default="medium", choices=("none", "low", "medium"))
     parser.add_argument("--top-k", type=int, default=150)
@@ -193,7 +246,7 @@ def main() -> None:
     parser.add_argument("--max-usd", type=float, default=1.0)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    args.model = args.model or ("jev-1.13.0" if args.implementation == "jev" else "gpt-6-luna")
+    args.model = args.model or {"jev": "jev-1.13.0", "clef": "clef", "llm": "gpt-6-luna"}[args.implementation]
     report = asyncio.run(run(args))
     args.output.write_text(json.dumps(report, indent=1, ensure_ascii=False) + "\n", "utf-8")
 
