@@ -1,0 +1,252 @@
+{
+ "description": "Larkspur Analytics: original synthetic English documents written for M0b",
+ "documents": [
+  {
+   "family": "r01-travel",
+   "id": "r01-d1",
+   "text": "# Travel and Expense Policy\n\n## Overview\n\nThis policy applies to every Larkspur Analytics employee who travels for work. Book travel through the Wayfare portal so that the finance team can see every commitment before it is paid. Trips that are booked outside the portal are reimbursed only when the traveler explains why the portal could not be used.\n\n## Air travel\n\nEconomy class is the default for every flight. Flights longer than eight hours may be booked in premium economy without additional approval. Business class requires written approval from a vice president before the ticket is purchased. Changes to a ticket are reimbursed when the change is caused by the business purpose of the trip.\n\n## Lodging\n\nThe nightly hotel limit is 210 US dollars in most cities and 320 US dollars in the high-cost cities listed in Appendix B. Travelers who stay with friends or family may claim a flat 40 dollar hosting allowance per night instead of a hotel rate.\n\n## Meals\n\nMeals are reimbursed at actual cost up to a daily limit of 75 US dollars. Alcohol is never reimbursed, even at a client dinner. Receipts are required for any single meal above 25 dollars.\n\n## Exceptions\n\nA manager may approve a one-time exception to the lodging limit when a conference hotel is the only reasonable option. The exception must be attached to the expense report.",
+   "title": "Travel and Expense Policy"
+  },
+  {
+   "family": "r01-travel",
+   "id": "r01-d2",
+   "text": "# Expense Report Submission Guide\n\n## Overview\n\nExpense reports are filed in the Tally expense tool. Each report covers one trip or one calendar month of local expenses.\n\n## Deadlines\n\nSubmit an expense report within 30 days of returning from a trip. Reports submitted after 90 days are rejected unless the finance director grants an extension. Reimbursements are paid with the next payroll cycle after the report is approved.\n\n## Receipts\n\nPhotograph each receipt with the Tally mobile app on the day it is issued. Lost receipts can be replaced with a signed missing-receipt declaration, but no more than twice in a calendar year.\n\n## Approval\n\nYour direct manager approves the report first. Reports above 5,000 US dollars also need approval from the department's finance partner.",
+   "title": "Expense Report Submission Guide"
+  },
+  {
+   "family": "r02-laptops",
+   "id": "r02-d1",
+   "text": "# Hardware Refresh Program\n\n## Overview\n\nThe hardware refresh program replaces employee laptops on a fixed cycle so that nobody works on a machine that is out of warranty. IT schedules each refresh automatically and emails the employee three weeks in advance.\n\n## Eligibility\n\nEngineering and data science staff receive a new laptop every three years. All other roles receive one every four years. Contractors are not eligible and use equipment supplied by their agency.\n\n## Standard models\n\nEngineers choose between the Corvid 16 with 64 GB of memory and the Kestrel 14 with 32 GB of memory. Other roles receive the Kestrel 14 by default. Requests for a non-standard model need a written justification from the employee's director.\n\n## Returning old devices\n\nThe old laptop must be returned within ten business days of receiving the new one. IT wipes every returned device using a certified erasure process before it is donated or recycled.\n\n## Exceptions\n\nA device that fails outside warranty can be replaced early. Accidental damage is repaired first, and replaced only if the repair would cost more than half the price of a new device.",
+   "title": "Hardware Refresh Program"
+  },
+  {
+   "family": "r02-laptops",
+   "id": "r02-d2",
+   "text": "# IT Service Desk FAQ\n\n## Overview\n\nThe service desk is open from 8:00 to 18:00 on weekdays. Urgent outages can be reported at any time through the on-call line.\n\n## Loaner devices\n\nLoaner laptops are available for up to two weeks while a device is being repaired. Loaners are reset to a clean image when they are returned.\n\n## Peripherals\n\nEvery employee may order one external monitor, one keyboard and one mouse each refresh cycle. Docking stations are provided to employees who work from an office at least two days a week.\n\n## Software requests\n\nSoftware that is on the approved catalog installs automatically within an hour. Software outside the catalog goes through a security review that usually takes five business days.",
+   "title": "IT Service Desk FAQ"
+  },
+  {
+   "family": "r03-ledger-incidents",
+   "id": "r03-d1",
+   "text": "# Ledger Billing Service Runbook\n\n## Overview\n\nLedger computes monthly invoices for every Larkspur customer and posts them to the payments provider. It runs as three replicas behind the internal load balancer.\n\n## Alerts\n\nThe invoice-lag alert fires when the oldest unprocessed billing event is more than fifteen minutes old. The payment-rejection alert fires when more than two percent of posted invoices are rejected within an hour.\n\n## First response\n\nAcknowledge the page within five minutes. Check the Ledger dashboard for queue depth, replica health and the error rate of the payments provider. If a single replica is unhealthy, drain it and let the scheduler replace it.\n\n## Detailed recovery procedure\n\nWhen the invoice-lag alert persists after a replica has been replaced, the cause is usually a stuck batch rather than a capacity problem. Open the batch console and sort open batches by age. A batch that has been in the claimed state for more than twenty minutes without progress is considered stuck. Before you release a stuck batch, confirm that its worker is no longer running by checking the worker heartbeat table; releasing a batch whose worker is still alive produces duplicate invoices, which are expensive to reverse because the payments provider charges a fee for every refund. When the heartbeat is older than five minutes, release the batch with the release command and record the batch identifier in the incident channel. Released batches are claimed again by a healthy replica within a minute. If three or more batches are stuck at the same time, do not release them one by one; instead, pause the scheduler, because simultaneous stuck batches almost always indicate that the database connection pool is exhausted. Increase the pool only after the database team confirms there is headroom on the primary. After the scheduler is resumed, watch the invoice-lag graph for thirty minutes. The lag should fall steadily; a lag that falls and then plateaus means another batch has stuck and the procedure should be repeated from the beginning. Every release must be listed in the incident review with the time it was performed and the person who performed it, because finance reconciles each released batch against the payments provider's settlement report at the end of the month. If the settlement report shows a released batch that the payments provider never received, finance opens a reconciliation ticket and the billing team reposts that batch manually after confirming that no customer has been charged for it. Manual reposting is performed only by the billing team lead or a named deputy, never by the on-call engineer, because a repost bypasses the duplicate check that normal processing performs. The on-call engineer's responsibility ends once invoices are flowing again and every release has been recorded; the follow-up reconciliation can take several days and is tracked in the finance queue rather than in the incident channel. When the same batch becomes stuck twice in one month, the billing team opens a defect for the batch worker and attaches the heartbeat history of both incidents, so that the cause can be traced to a specific worker version. Historically, most repeated stalls were traced to long-running database transactions held open by reporting queries during month-end close, which is why reporting jobs are now scheduled outside the invoicing window on the last three days of each month.\n\n## Escalation\n\nEscalate to the billing team lead if invoices are not flowing again within one hour. Escalate to the finance director if any customer may have been charged twice.",
+   "title": "Ledger Billing Service Runbook"
+  },
+  {
+   "family": "r03-ledger-incidents",
+   "id": "r03-d2",
+   "text": "# On-call Handbook\n\n## Overview\n\nEvery engineering team runs a weekly on-call rotation. The rotation hands over on Mondays at 10:00 local time.\n\n## Expectations\n\nThe primary on-call engineer acknowledges pages within five minutes and keeps their laptop within reach. The secondary covers if the primary does not acknowledge within fifteen minutes.\n\n## Compensation\n\nOn-call engineers receive a fixed stipend of 300 US dollars per week. A page handled between 22:00 and 07:00 also earns half a day of time off in lieu.\n\n## Incident reviews\n\nEvery incident with customer impact gets a written review within five business days. Reviews are blameless and focus on what made the failure possible.",
+   "title": "On-call Handbook"
+  },
+  {
+   "family": "r04-aria-sensors",
+   "id": "r04-d1",
+   "text": "# Aria-200 Sensor Datasheet\n\n## Overview\n\nThe Aria-200 is a battery-powered environmental sensor for indoor spaces. It measures temperature, relative humidity and carbon dioxide.\n\n## Specifications\n\nTemperature accuracy is plus or minus 0.3 degrees Celsius. Carbon dioxide is measured with a non-dispersive infrared cell from 400 to 5,000 parts per million. The Aria-200 reports every five minutes over Bluetooth Low Energy.\n\n## Battery\n\nTwo AA lithium cells power the Aria-200 for about eighteen months at the default reporting interval.\n\n## Installation\n\nMount the sensor at head height, away from windows, doors and air vents.",
+   "title": "Aria-200 Sensor Datasheet"
+  },
+  {
+   "family": "r04-aria-sensors",
+   "id": "r04-d2",
+   "text": "# Aria-300 Sensor Datasheet\n\n## Overview\n\nThe Aria-300 extends the Aria-200 with particulate matter sensing and a LoRaWAN radio for large buildings.\n\n## Specifications\n\nTemperature accuracy is plus or minus 0.2 degrees Celsius. The Aria-300 also measures PM2.5 and PM10 particulates with a laser scattering sensor. It reports every minute over LoRaWAN, which reaches gateways up to two kilometers away in open space.\n\n## Battery\n\nThe Aria-300 uses a rechargeable 6,000 mAh pack that lasts about nine months between charges at the default reporting interval.\n\n## Installation\n\nMount the sensor at head height, away from windows, doors and air vents. Keep the particulate inlet free of dust covers.",
+   "title": "Aria-300 Sensor Datasheet"
+  },
+  {
+   "family": "r04-aria-sensors",
+   "id": "r04-d3",
+   "text": "# Choosing an Aria Sensor\n\n## Overview\n\nThis guide helps facilities teams choose between the Aria models.\n\n## Recommendations\n\nChoose the Aria-200 for offices under 2,000 square meters where a Bluetooth gateway is already installed. Choose the Aria-300 for warehouses, schools and buildings near busy roads, where particulates matter and distances are longer.\n\n## Pricing\n\nThe Aria-200 lists at 149 US dollars per unit. The Aria-300 lists at 289 US dollars per unit, and volume discounts start at fifty units.",
+   "title": "Choosing an Aria Sensor"
+  },
+  {
+   "family": "r05-leave",
+   "id": "r05-d1",
+   "text": "# Parental Leave Policy\n\n## Overview\n\nLarkspur offers paid parental leave to every employee who becomes a parent through birth, adoption or foster placement.\n\n## Duration\n\nBirthing parents receive twenty weeks of fully paid leave. Non-birthing parents receive sixteen weeks of fully paid leave. Leave can be taken in up to three blocks within the first year.\n\n## Eligibility\n\nEmployees become eligible after ninety days of employment. Part-time employees receive leave in proportion to their contracted hours.\n\n## Returning to work\n\nEmployees may return on a reduced schedule of sixty percent for the first four weeks at full pay.",
+   "title": "Parental Leave Policy"
+  },
+  {
+   "family": "r05-leave",
+   "id": "r05-d2",
+   "text": "# Time Off Policy\n\n## Overview\n\nTime off at Larkspur is tracked in the People portal.\n\n## Annual leave\n\nFull-time employees accrue twenty-five days of annual leave per year. Up to five unused days carry over into the next year and expire on March 31.\n\n## Sick leave\n\nSick leave is unlimited for illnesses shorter than five consecutive working days. Longer absences need a note from a medical professional.\n\n## Public holidays\n\nEach office observes the public holidays of its country. Employees who work on a public holiday receive a replacement day.\n\n## Exceptions\n\nManagers may approve unpaid leave of up to three months for personal reasons.",
+   "title": "Time Off Policy"
+  },
+  {
+   "family": "r06-retention",
+   "id": "r06-d1",
+   "text": "# Data Retention Policy\n\n## Overview\n\nThis policy sets how long Larkspur keeps customer and internal data, and how it is deleted when that period ends.\n\n## Retention periods\n\nCustomer analytics data is kept for as long as the customer's contract is active and deleted ninety days after the contract ends. Application logs are kept for thirty days. Financial records are kept for seven years to meet tax law.\n\n## Deletion\n\nDeletion runs as a nightly job that removes expired records from primary storage. Backups expire on their own schedule and are fully purged within thirty-five days of the primary deletion.\n\n## Legal holds\n\nA legal hold suspends deletion for the data it names until the legal team releases the hold. Holds are reviewed every six months.\n\n## Exceptions\n\nExceptions to a retention period require approval from the data protection officer and are recorded in the retention register.",
+   "title": "Data Retention Policy"
+  },
+  {
+   "family": "r06-retention",
+   "id": "r06-d2",
+   "text": "# Customer Data Deletion Requests\n\n## Overview\n\nCustomers can ask Larkspur to delete their data before their contract ends.\n\n## Process\n\nRequests are submitted through the support portal by an administrator of the customer account. Support confirms the request in writing and starts deletion within five business days.\n\n## Timeline\n\nPrimary data is deleted within thirty days of confirmation. The customer receives a deletion certificate once backups have also been purged.\n\n## Limits\n\nInvoices and payment records are excluded from deletion requests because they are financial records.",
+   "title": "Customer Data Deletion Requests"
+  },
+  {
+   "family": "r07-relocation",
+   "id": "r07-d1",
+   "text": "# Harbor Point Office Move\n\n## Overview\n\nThe Portland team moves from the Alder Street office to the new Harbor Point building in the autumn.\n\n## Timeline\n\nPacking crates are delivered on October 6. The final working day at Alder Street is October 17, and Harbor Point opens on October 20. Everyone works from home on October 18 and 19 while movers relocate equipment.\n\n## What to pack\n\nPack personal items and paper files in the labeled crates. IT moves monitors, docks and desk phones; do not pack them yourself.\n\n## Parking\n\nHarbor Point has eighty parking spaces, allocated by a quarterly lottery. Bicycle storage has room for sixty bicycles and includes showers.",
+   "title": "Harbor Point Office Move"
+  },
+  {
+   "family": "r07-relocation",
+   "id": "r07-d2",
+   "text": "# Harbor Point Building Guide\n\n## Overview\n\nHarbor Point is a five-story building on the riverfront. Larkspur occupies the third and fourth floors.\n\n## Access\n\nBadges issued for Alder Street work at Harbor Point after October 20. Visitors check in at the ground floor reception, which is staffed from 7:30 to 18:30.\n\n## Meeting rooms\n\nThe fourth floor has twelve meeting rooms, including two rooms for twenty people. Rooms are booked in the calendar like any other resource.\n\n## Kitchen\n\nEach floor has a kitchen. Coffee and fruit are provided; lunch is catered on Wednesdays.",
+   "title": "Harbor Point Building Guide"
+  },
+  {
+   "family": "r08-customer-research",
+   "id": "r08-d1",
+   "text": "# Q3 Customer Research Findings\n\n## Overview\n\nThe research team interviewed twenty-four customers between July and September about how they use Larkspur dashboards.\n\n## Key findings\n\nEighteen of the twenty-four customers export dashboards to spreadsheets at least weekly, mostly to combine Larkspur data with their own budget figures. Customers in healthcare asked repeatedly for audit trails that show who viewed a dashboard. Only three customers used the alerting feature, and most did not know it existed.\n\n## Pain points\n\nThe most common complaint was slow loading of dashboards with more than twenty charts. Several customers described the sharing dialog as confusing because it mixes viewers and editors in one list.\n\n## Recommendations\n\nThe team recommends a native spreadsheet connector, a viewer audit log for regulated customers, and an onboarding tour that introduces alerting.",
+   "title": "Q3 Customer Research Findings"
+  },
+  {
+   "family": "r08-customer-research",
+   "id": "r08-d2",
+   "text": "# Research Method Notes\n\n## Overview\n\nThese notes describe how the Q3 interviews were conducted.\n\n## Recruitment\n\nParticipants were recruited from active accounts with at least ten weekly users. Each participant received a 100 US dollar gift card.\n\n## Sessions\n\nEach interview lasted forty-five minutes and was recorded with consent. Two researchers attended every session, one leading and one taking notes.\n\n## Analysis\n\nNotes were coded independently by both researchers, and disagreements were resolved in a joint session.",
+   "title": "Research Method Notes"
+  },
+  {
+   "family": "r09-data-api",
+   "id": "r09-d1",
+   "text": "# Larkspur Data API Reference\n\n## Overview\n\nThe Larkspur Data API gives programmatic access to dashboards, datasets and query results. All endpoints use HTTPS and JSON.\n\n## Authentication\n\nRequests authenticate with a bearer token created in the account settings. Tokens expire after ninety days and can be revoked at any time.\n\n## Rate limits\n\nStandard accounts may send 600 requests per minute. Enterprise accounts may send 3,000 requests per minute. A request over the limit receives HTTP 429 with a Retry-After header in seconds.\n\n## Pagination\n\nList endpoints return at most 200 items per page and include a cursor for the next page.\n\n## Versioning and deprecation\n\nThe API is versioned in the URL path, for example /v3/datasets. A version is supported for at least eighteen months after its successor is released. When a version is deprecated, every response from it carries a Deprecation header with the retirement date, and account administrators receive an email ninety days before retirement and again thirty days before retirement. Breaking changes are only ever introduced in a new version; within a version, Larkspur may add optional fields to responses and new optional parameters to requests, so clients must ignore fields they do not recognise. Error responses always contain a machine-readable code and a human-readable message, and the codes listed in the error catalogue never change meaning within a version. Clients that need longer to migrate can request an extension of up to six months through their account manager, which is granted for enterprise accounts that have a written migration plan. During an extension the retired version keeps working for that account only and is excluded from the standard availability commitment, so incidents affecting it are handled on a best-effort basis. Version three is the current version; version two was deprecated in January and retires at the end of July. After retirement, requests to a retired version receive HTTP 410 Gone with a link to the migration guide, and no data is returned. The migration guide lists every field that was renamed or removed between versions, together with the replacement field where one exists. Most clients need to change three things when moving from version two to version three: dataset identifiers are now strings rather than integers, timestamps are returned in UTC with an explicit offset, and list endpoints use cursor pagination instead of page numbers. The Python and JavaScript client libraries handle all three changes automatically from release 4.0 onwards, so clients that use a current library usually only need to upgrade the library and run their tests. Clients that call the API directly should test against the sandbox environment, which mirrors production data structures with synthetic data and is reset every Sunday. Larkspur support can review a migration plan on request, and enterprise customers can schedule a call with an API engineer to discuss unusual integrations. Usage of each version is shown in the account's API dashboard, which helps administrators find forgotten scripts that still call an old version before it retires.",
+   "title": "Larkspur Data API Reference"
+  },
+  {
+   "family": "r09-data-api",
+   "id": "r09-d2",
+   "text": "# API Quickstart\n\n## Overview\n\nThis quickstart shows how to run a first query with the Larkspur Data API.\n\n## Create a token\n\nOpen account settings, choose API tokens and create a token with read access to the datasets you need.\n\n## Run a query\n\nSend a POST request to /v3/queries with the dataset identifier and a SQL statement. Queries that take longer than thirty seconds return a job identifier that you can poll.\n\n## Next steps\n\nUse the Python client library to handle pagination and retries automatically.",
+   "title": "API Quickstart"
+  },
+  {
+   "family": "r10-lab-safety",
+   "id": "r10-d1",
+   "text": "# Fenwick Lab Chemical Storage Rules\n\n## Overview\n\nThese rules apply to every person who stores or handles chemicals in the Fenwick sensor calibration lab.\n\n## Storage\n\nFlammable solvents are stored in the yellow cabinet and never above eye level. Acids and bases are stored in separate ventilated cabinets. Every container carries a label with its contents, owner and date of opening.\n\n## Quantities\n\nNo more than ten liters of flammable solvent may be kept in the lab at any time. Larger deliveries go to the central store.\n\n## Spills\n\nSmall spills under one liter are cleaned with the spill kit by the person who caused them. Larger spills require evacuating the room and calling the site safety officer.\n\n## Exceptions\n\nExceptions are approved by the site safety officer and posted on the lab door.",
+   "title": "Fenwick Lab Chemical Storage Rules"
+  },
+  {
+   "family": "r10-lab-safety",
+   "id": "r10-d2",
+   "text": "# Fenwick Lab Access and Training\n\n## Overview\n\nThe Fenwick lab is a restricted area.\n\n## Training\n\nNew users complete a two-hour safety course and a supervised session before they receive badge access. Training is refreshed every year.\n\n## Working alone\n\nNobody may handle chemicals alone in the lab after 19:00. Calibration work without chemicals can be done alone if the user checks in with security.\n\n## Protective equipment\n\nSafety glasses are required at all times. Nitrile gloves and a lab coat are required when handling any chemical.",
+   "title": "Fenwick Lab Access and Training"
+  },
+  {
+   "family": "r11-grants",
+   "id": "r11-d1",
+   "text": "# Community Partner Grant Program\n\n## Overview\n\nThe Larkspur community grant funds nonprofit organizations that use data to improve public services in the cities where Larkspur has offices.\n\n## Funding\n\nThe program awards up to twelve grants a year. Each grant is between 10,000 and 40,000 US dollars and covers one year of work. Grantees also receive a free Team plan for the grant period.\n\n## Eligibility\n\nApplicants must be registered nonprofits with an annual budget under two million US dollars. Political campaigns and individual researchers are not eligible.\n\n## Timeline\n\nApplications open on February 1 and close on March 15. Finalists are interviewed in April, and awards are announced on May 20.\n\n## Reporting\n\nGrantees submit a short progress report after six months and a final report with outcomes at the end of the year.",
+   "title": "Community Partner Grant Program"
+  },
+  {
+   "family": "r11-grants",
+   "id": "r11-d2",
+   "text": "# Grant Review Guidelines\n\n## Overview\n\nThese guidelines tell reviewers how to score grant applications.\n\n## Scoring\n\nEach application is scored by three reviewers on impact, feasibility and use of data, each from one to five. Impact counts double in the total score.\n\n## Conflicts of interest\n\nReviewers declare any relationship with an applicant and do not score that application.\n\n## Decisions\n\nThe grant committee selects finalists from the twenty highest total scores and makes the final decision after interviews.",
+   "title": "Grant Review Guidelines"
+  },
+  {
+   "family": "r12-onboarding",
+   "id": "r12-d1",
+   "text": "# Engineering Onboarding Checklist\n\n## Overview\n\nThis checklist covers an engineer's first two weeks at Larkspur.\n\n## First day\n\nCollect your laptop and badge from IT, set up multi-factor authentication and join the engineering chat channels. Your buddy meets you for lunch.\n\n## First week\n\nClone the main repositories and run the local development environment. Complete the security awareness course by Friday. Ship one small change, such as a documentation fix, through code review.\n\n## Second week\n\nShadow the on-call engineer for at least one shift. Meet your manager to agree on goals for the first ninety days.\n\n## Exceptions\n\nEngineers who join in December complete the security course in their first week back after the holidays.",
+   "title": "Engineering Onboarding Checklist"
+  },
+  {
+   "family": "r12-onboarding",
+   "id": "r12-d2",
+   "text": "# Onboarding Buddy Guide\n\n## Overview\n\nEvery new engineer is paired with a buddy from a neighboring team for their first month.\n\n## Responsibilities\n\nThe buddy answers everyday questions, reviews the newcomer's first pull request and introduces them to at least five colleagues.\n\n## Time commitment\n\nBuddies should expect to spend about three hours a week on the role in the first two weeks, and one hour a week after that.\n\n## Recognition\n\nBuddying counts toward the mentoring expectation in the engineering career framework.",
+   "title": "Onboarding Buddy Guide"
+  },
+  {
+   "family": "r13-queue-outage",
+   "id": "r13-d1",
+   "text": "# Postmortem: March Queue Outage\n\n## Summary\n\nOn March 12, the ingestion queue stopped delivering events for two hours and forty minutes. Dashboards showed stale data for every customer during that time, but no data was lost.\n\n## Impact\n\nRoughly 1,900 customer accounts saw dashboards that were up to three hours old. Forty-one support tickets were opened.\n\n## Timeline and root cause\n\nAt 09:05 UTC a routine certificate rotation replaced the certificate used by the queue brokers. The new certificate had been issued for the wrong internal hostname, so every consumer that reconnected after the rotation failed its TLS handshake and backed off. Because consumers reconnect gradually as their connections age, the failure did not appear all at once; delivery fell to half its normal rate at 09:40 and stopped completely at 10:20. The queue-depth alert fired at 10:25, but the on-call engineer first investigated the brokers' disk usage, which was also high because undelivered events were accumulating. At 11:05 a second engineer noticed TLS errors in the consumer logs. The previous certificate was restored at 11:30, and consumers recovered within ten minutes. The backlog of roughly forty million events was fully processed by 13:00. The certificate was wrong because the rotation tool selected a template by prefix, and a new template with a similar name had been added the week before. Nothing in the rotation process checked that the certificate matched the hostnames that clients actually use, and the staging queue, where the same rotation had run a day earlier, uses a different hostname scheme that happened to match the wrong template. During the outage, the support team posted a status page update at 10:50, thirty minutes after delivery stopped completely, and updated it every half hour until recovery. Customers who opened tickets were told that their data was delayed rather than lost, which the team could say confidently because the queue retains events for seventy-two hours. After recovery, the processing pipeline worked through the backlog at roughly three times its normal rate, which briefly raised database load on the processing side; no further alerts fired during the catch-up period. The incident commander declared the incident resolved at 13:10, once the backlog had been processed and dashboards for a sample of customers were confirmed to be current. A follow-up review found that the rotation tool's logs had recorded the template it selected, but nobody reviewed those logs as part of the rotation, and the tool reported success because the installation itself completed without error. The team also found that the queue-depth alert threshold had been set high to avoid noise during normal traffic peaks, which delayed detection by several minutes; the threshold is being revisited separately from the action items below.\n\n## Action items\n\nAdd a hostname check to the rotation tool before any certificate is installed. Alert on consumer TLS handshake failures directly. Make the staging queue use the production hostname scheme.",
+   "title": "Postmortem: March Queue Outage"
+  },
+  {
+   "family": "r13-queue-outage",
+   "id": "r13-d2",
+   "text": "# Ingestion Queue Overview\n\n## Overview\n\nThe ingestion queue carries raw events from customer integrations to the processing pipeline.\n\n## Capacity\n\nThe queue runs on six brokers and handles about ninety thousand events per second at peak.\n\n## Retention\n\nEvents are retained for seventy-two hours, which is why a delivery outage shorter than three days does not lose data.\n\n## Ownership\n\nThe data platform team owns the queue and its on-call rotation.",
+   "title": "Ingestion Queue Overview"
+  },
+  {
+   "family": "r14-procurement",
+   "id": "r14-d1",
+   "text": "# Vendor Approval Process\n\n## Overview\n\nEvery new supplier of software or services must be approved before Larkspur signs a contract or pays an invoice.\n\n## Steps\n\nThe requester submits a vendor request in the procurement portal with the business purpose and expected annual spend. Procurement checks the vendor's financial standing. If the vendor will process customer data, the security team completes a risk assessment.\n\n## Thresholds\n\nPurchases under 5,000 US dollars a year need only the requester's manager. Purchases between 5,000 and 50,000 dollars also need the department head. Anything above 50,000 dollars goes to the chief financial officer.\n\n## Timelines\n\nA standard approval takes about ten business days. A security risk assessment adds up to fifteen business days.\n\n## Exceptions\n\nEmergency purchases may proceed with the CFO's verbal approval, followed by a vendor request within five business days.",
+   "title": "Vendor Approval Process"
+  },
+  {
+   "family": "r14-procurement",
+   "id": "r14-d2",
+   "text": "# Approved Vendor List\n\n## Overview\n\nThe approved vendor list names suppliers that have already passed review.\n\n## Using the list\n\nTeams can buy from an approved vendor without repeating the security assessment, as long as the new purchase does not change the kind of data the vendor handles.\n\n## Renewal\n\nEvery approved vendor is reviewed again every two years, or sooner if its ownership changes.\n\n## Removal\n\nVendors are removed from the list after a security incident until a new assessment is completed.",
+   "title": "Approved Vendor List"
+  },
+  {
+   "family": "r15-energy",
+   "id": "r15-d1",
+   "text": "# Sustainability Report: Data Center Energy\n\n## Overview\n\nThis report covers the electricity used by Larkspur's two data center regions over the last calendar year.\n\n## Consumption\n\nThe Oregon region used 4.1 gigawatt-hours, and the Frankfurt region used 2.6 gigawatt-hours. Average power usage effectiveness was 1.18 in Oregon and 1.31 in Frankfurt.\n\n## Renewable share\n\nOregon was supplied entirely by hydroelectric and wind power through a power purchase agreement. Frankfurt reached sixty-two percent renewable supply through certificates.\n\n## Targets\n\nLarkspur aims for one hundred percent renewable supply in every region by the end of next year and a power usage effectiveness below 1.25 everywhere.",
+   "title": "Sustainability Report: Data Center Energy"
+  },
+  {
+   "family": "r15-energy",
+   "id": "r15-d2",
+   "text": "# Hardware Efficiency Program\n\n## Overview\n\nThe efficiency program reduces the energy used per customer query.\n\n## Measures\n\nStorage servers older than five years are replaced with denser models that use about forty percent less power per terabyte. Idle compute capacity is powered down overnight in both regions.\n\n## Results so far\n\nEnergy per thousand queries fell by eighteen percent compared with the previous year.",
+   "title": "Hardware Efficiency Program"
+  },
+  {
+   "family": "r16-access-security",
+   "id": "r16-d1",
+   "text": "# Access Review Standard\n\n## Overview\n\nAccess reviews confirm that every person still needs the system access they hold.\n\n## Frequency\n\nProduction systems are reviewed every quarter. Internal tools are reviewed twice a year. Access for people who leave Larkspur is removed within four hours of their departure.\n\n## Reviewers\n\nThe owner of each system reviews its access list and must confirm or remove every entry. Owners cannot approve their own access.\n\n## Evidence\n\nEach review is exported from the identity provider and kept for three years for audits.\n\n## Exceptions\n\nEmergency access is granted for at most twenty-four hours and is reviewed the next business day.",
+   "title": "Access Review Standard"
+  },
+  {
+   "family": "r16-access-security",
+   "id": "r16-d2",
+   "text": "# Multi-factor Authentication Guide\n\n## Overview\n\nEvery Larkspur account must use multi-factor authentication.\n\n## Approved methods\n\nHardware security keys are the preferred method and are required for administrators. Authenticator apps are allowed for everyone else. Text-message codes are not accepted.\n\n## Lost keys\n\nReport a lost security key to IT immediately. IT disables the key and issues a temporary authenticator enrollment valid for seven days.\n\n## Exceptions\n\nThere are no exceptions to multi-factor authentication for any employee or contractor.",
+   "title": "Multi-factor Authentication Guide"
+  },
+  {
+   "family": "r17-board-minutes",
+   "id": "r17-d1",
+   "text": "# Board Meeting Minutes, May\n\n## Attendance\n\nAll seven directors attended. The chief executive and chief financial officer presented.\n\n## Financial update\n\nRevenue for the first quarter was 18.4 million US dollars, nine percent above plan. Operating costs were two percent above plan because of hiring in engineering.\n\n## Decisions\n\nThe board approved opening a sales office in Singapore in the fourth quarter. The board deferred a decision on acquiring the data visualization startup Quill until the August meeting, pending further due diligence.\n\n## Risks discussed\n\nDirectors asked for a plan to reduce dependence on the three largest customers, who together account for twenty-two percent of revenue.\n\n## Next meeting\n\nThe next meeting is scheduled for August 14.",
+   "title": "Board Meeting Minutes, May"
+  },
+  {
+   "family": "r17-board-minutes",
+   "id": "r17-d2",
+   "text": "# Board Meeting Minutes, February\n\n## Attendance\n\nSix of seven directors attended.\n\n## Financial update\n\nRevenue for the previous year was 64 million US dollars, four percent below plan.\n\n## Decisions\n\nThe board approved the annual budget with a hiring plan of sixty new roles. The board asked management to evaluate expansion into Southeast Asia and report back in May.\n\n## Next meeting\n\nThe next meeting is scheduled for May 9.",
+   "title": "Board Meeting Minutes, February"
+  },
+  {
+   "family": "r18-pricing",
+   "id": "r18-d1",
+   "text": "# Pricing Plans\n\n## Overview\n\nLarkspur sells three plans: Starter, Team and Enterprise. Prices are per month and billed annually.\n\n## Starter\n\nStarter costs 49 US dollars for up to three users and ten dashboards. Data is refreshed every twenty-four hours.\n\n## Team\n\nTeam costs 25 US dollars per user with a minimum of five users. It includes unlimited dashboards and hourly data refresh.\n\n## Enterprise\n\nEnterprise pricing is quoted per contract. It adds single sign-on, a viewer audit log, a dedicated account manager and refresh every five minutes.\n\n## Overview of support\n\nStarter includes email support. Team adds chat support during business hours. Enterprise includes a four-hour response commitment around the clock.",
+   "title": "Pricing Plans"
+  },
+  {
+   "family": "r18-pricing",
+   "id": "r18-d2",
+   "text": "# Discounts and Billing\n\n## Overview\n\nThis page describes discounts and billing terms for all plans.\n\n## Discounts\n\nRegistered nonprofits receive forty percent off Team and Enterprise. Education customers receive fifty percent off Team.\n\n## Billing\n\nPlans are billed annually in advance. Monthly billing is available for Team at a fifteen percent premium.\n\n## Cancellation\n\nAnnual plans can be cancelled at any time, with a refund for unused full months.",
+   "title": "Discounts and Billing"
+  },
+  {
+   "family": "r19-interns",
+   "id": "r19-d1",
+   "text": "# Internship Hiring Process\n\n## Overview\n\nLarkspur hires summer interns in engineering, data science and design.\n\n## Timeline\n\nApplications open in September and close on November 30. Interviews run from December to February, and offers are sent by March 1.\n\n## Interviews\n\nCandidates complete one forty-five-minute technical interview and one thirty-minute conversation with a future team member. There is no take-home assignment.\n\n## Compensation\n\nInterns are paid a monthly stipend of 5,200 US dollars. Interns who relocate receive a one-time housing allowance of 2,000 dollars.\n\n## Return offers\n\nInterns who meet their goals receive a return offer for a full-time role or a second internship.",
+   "title": "Internship Hiring Process"
+  },
+  {
+   "family": "r19-interns",
+   "id": "r19-d2",
+   "text": "# Intern Program Handbook\n\n## Overview\n\nThe intern program runs for twelve weeks between June and August.\n\n## Mentors\n\nEach intern has a mentor who meets them at least twice a week and a manager who sets their project goals.\n\n## Final presentations\n\nInterns present their project to the company in the last week of the program.\n\n## Housing\n\nLarkspur does not arrange housing but shares a list of short-term rentals near each office.",
+   "title": "Intern Program Handbook"
+  },
+  {
+   "family": "r20-irrigation-trial",
+   "id": "r20-d1",
+   "text": "# Irrigation Sensor Field Trial Report\n\n## Overview\n\nLarkspur trialled soil moisture sensors at three farms for one growing season to test whether sensor-guided irrigation saves water without reducing yield.\n\n## Sites\n\nThe trial ran at Millbrook Orchard (apples), Dunmore Fields (sweetcorn) and Ash Hollow Vineyard (grapes). Each site split its land into a sensor-guided half and a half irrigated on the farm's usual schedule.\n\n## Results by site\n\nAt Millbrook Orchard, the sensor-guided half used twenty-seven percent less water than the scheduled half, and apple yield was unchanged within the margin of measurement error. The orchard manager noted that the sensors recommended skipping irrigation on several cool days in early summer when the usual schedule would have watered, and those skipped days accounted for most of the saving. At Dunmore Fields the saving was smaller, at eleven percent, because sweetcorn needs heavy watering during tasseling, and the sensors agreed with the schedule during that period; outside tasseling, the savings were similar to the orchard's. Sweetcorn yield was two percent higher on the sensor-guided half, but the difference is within the variation normally seen between fields. At Ash Hollow Vineyard, the sensor-guided half used thirty-four percent less water, the largest saving in the trial, but grape yield fell by six percent. The vineyard manager considered the lower yield acceptable because the grapes had a higher sugar content, which is valued for winemaking; however, the trial was not designed to measure grape quality, so this observation is anecdotal. Across all three sites, sensor faults were rare: four of the ninety deployed sensors failed during the season, all because of rodent damage to cables, and each failed sensor was replaced within two days. Installation took one day per site, using a crew of two technicians, and calibration against hand-held reference readings was repeated after the first month at every site. The gateways at all three sites ran on solar power without interruption, although the vineyard gateway had to be moved once because vines shaded its panel in midsummer. Data from the sensors reached the Larkspur dashboard with a median delay of four minutes, which farm managers considered more than sufficient for irrigation decisions made once or twice a day. Farm managers at all three sites reported that the dashboard's daily recommendation was easy to follow, but two of them asked for a weekly summary that compares water use with the previous season. The orchard manager also asked for an alert when soil moisture falls below a set level overnight, because irrigation at the orchard is often started early in the morning before staff check the dashboard. Weather during the season was close to the ten-year average, with a slightly wetter June than usual, so the results may overstate savings in a dry year; the report recommends repeating the trial over at least two further seasons before drawing firm conclusions.\n\n## Conclusions\n\nSensor-guided irrigation saved water at every site. Yield was unaffected for apples and sweetcorn. The effect on grapes needs a dedicated trial that measures quality as well as yield.",
+   "title": "Irrigation Sensor Field Trial Report"
+  },
+  {
+   "family": "r20-irrigation-trial",
+   "id": "r20-d2",
+   "text": "# Field Trial Plan\n\n## Overview\n\nThis plan was written before the irrigation trial started.\n\n## Hypothesis\n\nSensor-guided irrigation reduces water use by at least fifteen percent with no loss of yield.\n\n## Equipment\n\nEach site receives thirty soil moisture sensors and one solar-powered gateway.\n\n## Budget\n\nThe trial budget is 86,000 US dollars, including sensors, installation and two site visits per farm.",
+   "title": "Field Trial Plan"
+  }
+ ],
+ "license": "Original synthetic text written for this evaluation; contains no third-party material."
+}

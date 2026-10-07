@@ -1,0 +1,1441 @@
+{
+ "grading": {
+  "0": "every passage not labeled",
+  "1": "on topic but does not help answer",
+  "2": "substantial support, a required part of a multi-part answer, or essential caveat",
+  "3": "directly answers the question"
+ },
+ "queries": [
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r01-travel",
+   "gold": [
+    {
+     "document_id": "r01-d1",
+     "grade": 3,
+     "quote": "Meals are reimbursed at actual cost up to a daily limit of 75 US dollars."
+    }
+   ],
+   "history": [],
+   "id": "r01-q1",
+   "question": "What is the daily meal limit when travelling for Larkspur?",
+   "search_query": "What is the daily meal limit when travelling for Larkspur?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r01-travel",
+   "gold": [
+    {
+     "document_id": "r01-d1",
+     "grade": 3,
+     "quote": "The nightly hotel limit is 210 US dollars in most cities and 320 US dollars in the high-cost cities listed in Appendix B."
+    },
+    {
+     "document_id": "r01-d1",
+     "grade": 1,
+     "quote": "A manager may approve a one-time exception to the lodging limit when a conference hotel is the only reasonable option."
+    }
+   ],
+   "history": [],
+   "id": "r01-q2",
+   "question": "How do the hotel limits for ordinary cities compare with high-cost cities?",
+   "search_query": "How do the hotel limits for ordinary cities compare with high-cost cities?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r01-travel",
+   "gold": [
+    {
+     "document_id": "r01-d1",
+     "grade": 2,
+     "quote": "Book travel through the Wayfare portal so that the finance team can see every commitment before it is paid."
+    },
+    {
+     "document_id": "r01-d2",
+     "grade": 3,
+     "quote": "Submit an expense report within 30 days of returning from a trip."
+    },
+    {
+     "document_id": "r01-d2",
+     "grade": 2,
+     "quote": "Photograph each receipt with the Tally mobile app on the day it is issued."
+    },
+    {
+     "document_id": "r01-d2",
+     "grade": 3,
+     "quote": "Reimbursements are paid with the next payroll cycle after the report is approved."
+    },
+    {
+     "document_id": "r01-d2",
+     "grade": 2,
+     "quote": "Your direct manager approves the report first."
+    },
+    {
+     "document_id": "r01-d2",
+     "grade": 2,
+     "quote": "Expense reports are filed in the Tally expense tool."
+    },
+    {
+     "document_id": "r01-d1",
+     "grade": 2,
+     "quote": "Trips that are booked outside the portal are reimbursed only when the traveler explains why the portal could not be used."
+    },
+    {
+     "document_id": "r01-d2",
+     "grade": 2,
+     "quote": "Reports submitted after 90 days are rejected unless the finance director grants an extension."
+    },
+    {
+     "document_id": "r01-d2",
+     "grade": 2,
+     "quote": "Reports above 5,000 US dollars also need approval from the department's finance partner."
+    }
+   ],
+   "history": [],
+   "id": "r01-q3",
+   "question": "Walk me through everything I need to do to get reimbursed for a business trip, from booking to payment.",
+   "search_query": "Walk me through everything I need to do to get reimbursed for a business trip, from booking to payment."
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r01-travel",
+   "gold": [
+    {
+     "document_id": "r01-d2",
+     "grade": 3,
+     "quote": "Reports above 5,000 US dollars also need approval from the department's finance partner."
+    },
+    {
+     "document_id": "r01-d2",
+     "grade": 2,
+     "quote": "Your direct manager approves the report first."
+    }
+   ],
+   "history": [
+    {
+     "answer": "Within 30 days of returning; reports after 90 days are rejected unless the finance director grants an extension.",
+     "user_message": "When do I need to file my expense report after a trip?"
+    }
+   ],
+   "id": "r01-q4",
+   "question": "And who has to approve it if it's a big one?",
+   "search_query": "Who has to approve a large expense report after a trip?"
+  },
+  {
+   "answerable": false,
+   "category": "ambiguous_no_answer",
+   "family": "r01-travel",
+   "gold": [
+    {
+     "document_id": "r01-d1",
+     "grade": 1,
+     "quote": "Meals are reimbursed at actual cost up to a daily limit of 75 US dollars."
+    }
+   ],
+   "history": [],
+   "id": "r01-q5",
+   "question": "What per diem does Larkspur pay for international relocation?",
+   "search_query": "What per diem does Larkspur pay for international relocation?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r01-travel",
+   "gold": [
+    {
+     "document_id": "r01-d1",
+     "grade": 3,
+     "quote": "Business class requires written approval from a vice president before the ticket is purchased."
+    },
+    {
+     "document_id": "r01-d1",
+     "grade": 2,
+     "quote": "Flights longer than eight hours may be booked in premium economy without additional approval."
+    }
+   ],
+   "history": [],
+   "id": "r01-q6",
+   "question": "Can I book business class for a long flight?",
+   "search_query": "Can I book business class for a long flight?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r02-laptops",
+   "gold": [
+    {
+     "document_id": "r02-d1",
+     "grade": 3,
+     "quote": "Engineering and data science staff receive a new laptop every three years."
+    }
+   ],
+   "history": [],
+   "id": "r02-q1",
+   "question": "How often do engineers get a new laptop?",
+   "search_query": "How often do engineers get a new laptop?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r02-laptops",
+   "gold": [
+    {
+     "document_id": "r02-d1",
+     "grade": 3,
+     "quote": "Engineers choose between the Corvid 16 with 64 GB of memory and the Kestrel 14 with 32 GB of memory."
+    }
+   ],
+   "history": [],
+   "id": "r02-q2",
+   "question": "What's the difference between the two laptop models engineers can choose from?",
+   "search_query": "What's the difference between the two laptop models engineers can choose from?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r02-laptops",
+   "gold": [
+    {
+     "document_id": "r02-d1",
+     "grade": 3,
+     "quote": "A device that fails outside warranty can be replaced early."
+    },
+    {
+     "document_id": "r02-d1",
+     "grade": 3,
+     "quote": "Accidental damage is repaired first, and replaced only if the repair would cost more than half the price of a new device."
+    },
+    {
+     "document_id": "r02-d2",
+     "grade": 3,
+     "quote": "Loaner laptops are available for up to two weeks while a device is being repaired."
+    }
+   ],
+   "history": [],
+   "id": "r02-q3",
+   "question": "My laptop broke and isn't under warranty. What happens and what can I use in the meantime?",
+   "search_query": "My laptop broke and isn't under warranty. What happens and what can I use in the meantime?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r02-laptops",
+   "gold": [
+    {
+     "document_id": "r02-d1",
+     "grade": 3,
+     "quote": "The old laptop must be returned within ten business days of receiving the new one."
+    },
+    {
+     "document_id": "r02-d1",
+     "grade": 2,
+     "quote": "IT wipes every returned device using a certified erasure process before it is donated or recycled."
+    }
+   ],
+   "history": [
+    {
+     "answer": "Yes. IT schedules each refresh and emails you three weeks in advance.",
+     "user_message": "Do I get a new laptop automatically?"
+    }
+   ],
+   "id": "r02-q4",
+   "question": "What do I do with the old one afterwards?",
+   "search_query": "What do I do with my old laptop after getting a new one?"
+  },
+  {
+   "answerable": true,
+   "category": "ambiguous_no_answer",
+   "family": "r02-laptops",
+   "gold": [
+    {
+     "document_id": "r02-d2",
+     "grade": 2,
+     "quote": "Software outside the catalog goes through a security review that usually takes five business days."
+    },
+    {
+     "document_id": "r02-d2",
+     "grade": 2,
+     "quote": "Software that is on the approved catalog installs automatically within an hour."
+    },
+    {
+     "document_id": "r02-d2",
+     "grade": 2,
+     "quote": "Loaner laptops are available for up to two weeks while a device is being repaired."
+    },
+    {
+     "document_id": "r02-d1",
+     "grade": 2,
+     "quote": "The old laptop must be returned within ten business days of receiving the new one."
+    },
+    {
+     "document_id": "r02-d1",
+     "grade": 2,
+     "quote": "IT schedules each refresh automatically and emails the employee three weeks in advance."
+    },
+    {
+     "document_id": "r02-d1",
+     "grade": 2,
+     "quote": "Engineering and data science staff receive a new laptop every three years. All other roles receive one every four years."
+    }
+   ],
+   "history": [],
+   "id": "r02-q5",
+   "question": "How long does it take?",
+   "search_query": "How long does it take?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r02-laptops",
+   "gold": [
+    {
+     "document_id": "r02-d1",
+     "grade": 3,
+     "quote": "Contractors are not eligible and use equipment supplied by their agency."
+    },
+    {
+     "document_id": "r02-d1",
+     "grade": 2,
+     "quote": "Other roles receive the Kestrel 14 by default."
+    },
+    {
+     "document_id": "r02-d1",
+     "grade": 2,
+     "quote": "Engineers choose between the Corvid 16 with 64 GB of memory and the Kestrel 14 with 32 GB of memory."
+    },
+    {
+     "document_id": "r02-d1",
+     "grade": 2,
+     "quote": "Engineering and data science staff receive a new laptop every three years. All other roles receive one every four years."
+    },
+    {
+     "document_id": "r02-d2",
+     "grade": 2,
+     "quote": "Every employee may order one external monitor, one keyboard and one mouse each refresh cycle."
+    },
+    {
+     "document_id": "r02-d2",
+     "grade": 2,
+     "quote": "Docking stations are provided to employees who work from an office at least two days a week."
+    }
+   ],
+   "history": [],
+   "id": "r02-q6",
+   "question": "Do contractors and employees get the same equipment?",
+   "search_query": "Do contractors and employees get the same equipment?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r03-ledger-incidents",
+   "gold": [
+    {
+     "document_id": "r03-d1",
+     "grade": 3,
+     "quote": "The invoice-lag alert fires when the oldest unprocessed billing event is more than fifteen minutes old."
+    }
+   ],
+   "history": [],
+   "id": "r03-q1",
+   "question": "When does the invoice lag alert fire for Ledger?",
+   "search_query": "When does the invoice lag alert fire for Ledger?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r03-ledger-incidents",
+   "gold": [
+    {
+     "document_id": "r03-d1",
+     "grade": 3,
+     "quote": "The invoice-lag alert fires when the oldest unprocessed billing event is more than fifteen minutes old."
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 3,
+     "quote": "The payment-rejection alert fires when more than two percent of posted invoices are rejected within an hour."
+    }
+   ],
+   "history": [],
+   "id": "r03-q2",
+   "question": "How do the invoice-lag and payment-rejection alerts differ?",
+   "search_query": "How do the invoice-lag and payment-rejection alerts differ?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r03-ledger-incidents",
+   "gold": [
+    {
+     "document_id": "r03-d1",
+     "grade": 3,
+     "quote": "When the invoice-lag alert persists after a replica has been replaced, the cause is usually a stuck batch rather than a capacity problem."
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 3,
+     "quote": "When the heartbeat is older than five minutes, release the batch with the release command and record the batch identifier in the incident channel."
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 3,
+     "quote": "If three or more batches are stuck at the same time, do not release them one by one; instead, pause the scheduler, because simultaneous stuck batches almost always indicate that the database connection pool is exhausted."
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 2,
+     "quote": "Every release must be listed in the incident review with the time it was performed and the person who performed it"
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 2,
+     "quote": "A batch that has been in the claimed state for more than twenty minutes without progress is considered stuck."
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 2,
+     "quote": "Before you release a stuck batch, confirm that its worker is no longer running by checking the worker heartbeat table"
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 2,
+     "quote": "After the scheduler is resumed, watch the invoice-lag graph for thirty minutes."
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 2,
+     "quote": "Escalate to the billing team lead if invoices are not flowing again within one hour."
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 2,
+     "quote": "Open the batch console and sort open batches by age."
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 2,
+     "quote": "Increase the pool only after the database team confirms there is headroom on the primary."
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 2,
+     "quote": "The lag should fall steadily; a lag that falls and then plateaus means another batch has stuck and the procedure should be repeated from the beginning."
+    },
+    {
+     "document_id": "r03-d1",
+     "grade": 2,
+     "quote": "The on-call engineer's responsibility ends once invoices are flowing again and every release has been recorded"
+    }
+   ],
+   "history": [],
+   "id": "r03-q3",
+   "question": "Ledger invoices are lagging and replacing the replica didn't help. What should I do, and what do I need to record?",
+   "search_query": "Ledger invoices are lagging and replacing the replica didn't help. What should I do, and what do I need to record?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r03-ledger-incidents",
+   "gold": [
+    {
+     "document_id": "r03-d1",
+     "grade": 3,
+     "quote": "releasing a batch whose worker is still alive produces duplicate invoices, which are expensive to reverse because the payments provider charges a fee for every refund"
+    }
+   ],
+   "history": [
+    {
+     "answer": "Releasing a batch whose worker is still alive produces duplicate invoices, so you first check the worker heartbeat.",
+     "user_message": "Why shouldn't I just release every stuck Ledger batch?"
+    }
+   ],
+   "id": "r03-q4",
+   "question": "Why are duplicates such a problem there?",
+   "search_query": "Why are duplicates a problem when releasing stuck Ledger batches?"
+  },
+  {
+   "answerable": false,
+   "category": "ambiguous_no_answer",
+   "family": "r03-ledger-incidents",
+   "gold": [],
+   "history": [],
+   "id": "r03-q5",
+   "question": "What is Ledger's monthly cloud hosting cost?",
+   "search_query": "What is Ledger's monthly cloud hosting cost?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r03-ledger-incidents",
+   "gold": [
+    {
+     "document_id": "r03-d2",
+     "grade": 3,
+     "quote": "On-call engineers receive a fixed stipend of 300 US dollars per week."
+    },
+    {
+     "document_id": "r03-d2",
+     "grade": 3,
+     "quote": "A page handled between 22:00 and 07:00 also earns half a day of time off in lieu."
+    },
+    {
+     "document_id": "r03-d2",
+     "grade": 2,
+     "quote": "The primary on-call engineer acknowledges pages within five minutes and keeps their laptop within reach."
+    }
+   ],
+   "history": [],
+   "id": "r03-q6",
+   "question": "What does being on call cost me and what do I get for it?",
+   "search_query": "What does being on call cost me and what do I get for it?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r04-aria-sensors",
+   "gold": [
+    {
+     "document_id": "r04-d1",
+     "grade": 3,
+     "quote": "Two AA lithium cells power the Aria-200 for about eighteen months at the default reporting interval."
+    }
+   ],
+   "history": [],
+   "id": "r04-q1",
+   "question": "How long does the Aria-200 battery last?",
+   "search_query": "How long does the Aria-200 battery last?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r04-aria-sensors",
+   "gold": [
+    {
+     "document_id": "r04-d1",
+     "grade": 3,
+     "quote": "Two AA lithium cells power the Aria-200 for about eighteen months at the default reporting interval."
+    },
+    {
+     "document_id": "r04-d2",
+     "grade": 3,
+     "quote": "The Aria-300 uses a rechargeable 6,000 mAh pack that lasts about nine months between charges at the default reporting interval."
+    }
+   ],
+   "history": [],
+   "id": "r04-q2",
+   "question": "Compare the battery life of the Aria-200 and Aria-300.",
+   "search_query": "Compare the battery life of the Aria-200 and Aria-300."
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r04-aria-sensors",
+   "gold": [
+    {
+     "document_id": "r04-d3",
+     "grade": 3,
+     "quote": "Choose the Aria-300 for warehouses, schools and buildings near busy roads, where particulates matter and distances are longer."
+    },
+    {
+     "document_id": "r04-d2",
+     "grade": 2,
+     "quote": "The Aria-300 also measures PM2.5 and PM10 particulates with a laser scattering sensor."
+    },
+    {
+     "document_id": "r04-d3",
+     "grade": 1,
+     "quote": "The Aria-300 lists at 289 US dollars per unit, and volume discounts start at fifty units."
+    },
+    {
+     "document_id": "r04-d2",
+     "grade": 2,
+     "quote": "The Aria-300 extends the Aria-200 with particulate matter sensing and a LoRaWAN radio for large buildings."
+    },
+    {
+     "document_id": "r04-d2",
+     "grade": 2,
+     "quote": "It reports every minute over LoRaWAN, which reaches gateways up to two kilometers away in open space."
+    }
+   ],
+   "history": [],
+   "id": "r04-q3",
+   "question": "We run a school next to a highway. Which Aria sensor should we buy, and why?",
+   "search_query": "We run a school next to a highway. Which Aria sensor should we buy, and why?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r04-aria-sensors",
+   "gold": [
+    {
+     "document_id": "r04-d2",
+     "grade": 3,
+     "quote": "It reports every minute over LoRaWAN, which reaches gateways up to two kilometers away in open space."
+    }
+   ],
+   "history": [
+    {
+     "answer": "PM2.5 and PM10 particulates, using a laser scattering sensor.",
+     "user_message": "What does the Aria-300 measure that the 200 doesn't?"
+    }
+   ],
+   "id": "r04-q4",
+   "question": "How far can it send its readings?",
+   "search_query": "How far can the Aria-300 send its readings?"
+  },
+  {
+   "answerable": false,
+   "category": "ambiguous_no_answer",
+   "family": "r04-aria-sensors",
+   "gold": [
+    {
+     "document_id": "r04-d2",
+     "grade": 1,
+     "quote": "Mount the sensor at head height, away from windows, doors and air vents. Keep the particulate inlet free of dust covers."
+    }
+   ],
+   "history": [],
+   "id": "r04-q5",
+   "question": "Is the Aria-300 certified for outdoor use in rain?",
+   "search_query": "Is the Aria-300 certified for outdoor use in rain?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r04-aria-sensors",
+   "gold": [
+    {
+     "document_id": "r04-d3",
+     "grade": 3,
+     "quote": "The Aria-300 lists at 289 US dollars per unit, and volume discounts start at fifty units."
+    }
+   ],
+   "history": [
+    {
+     "answer": "It lists at 149 US dollars per unit.",
+     "user_message": "How much is the Aria-200?"
+    }
+   ],
+   "id": "r04-q6",
+   "question": "And the bigger one?",
+   "search_query": "How much is the Aria-300?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r05-leave",
+   "gold": [
+    {
+     "document_id": "r05-d1",
+     "grade": 3,
+     "quote": "Non-birthing parents receive sixteen weeks of fully paid leave."
+    }
+   ],
+   "history": [],
+   "id": "r05-q1",
+   "question": "How many weeks of paid leave does a non-birthing parent get?",
+   "search_query": "How many weeks of paid leave does a non-birthing parent get?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r05-leave",
+   "gold": [
+    {
+     "document_id": "r05-d1",
+     "grade": 3,
+     "quote": "Birthing parents receive twenty weeks of fully paid leave."
+    },
+    {
+     "document_id": "r05-d1",
+     "grade": 3,
+     "quote": "Non-birthing parents receive sixteen weeks of fully paid leave."
+    }
+   ],
+   "history": [],
+   "id": "r05-q2",
+   "question": "How does leave differ between birthing and non-birthing parents?",
+   "search_query": "How does leave differ between birthing and non-birthing parents?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r05-leave",
+   "gold": [
+    {
+     "document_id": "r05-d1",
+     "grade": 3,
+     "quote": "Employees become eligible after ninety days of employment."
+    },
+    {
+     "document_id": "r05-d1",
+     "grade": 3,
+     "quote": "Part-time employees receive leave in proportion to their contracted hours."
+    },
+    {
+     "document_id": "r05-d1",
+     "grade": 2,
+     "quote": "Larkspur offers paid parental leave to every employee who becomes a parent through birth, adoption or foster placement."
+    },
+    {
+     "document_id": "r05-d1",
+     "grade": 2,
+     "quote": "Non-birthing parents receive sixteen weeks of fully paid leave."
+    },
+    {
+     "document_id": "r05-d1",
+     "grade": 2,
+     "quote": "Leave can be taken in up to three blocks within the first year."
+    }
+   ],
+   "history": [],
+   "id": "r05-q3",
+   "question": "I joined two months ago, work part time, and we're adopting a child. What leave can I expect?",
+   "search_query": "I joined two months ago, work part time, and we're adopting a child. What leave can I expect?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r05-leave",
+   "gold": [
+    {
+     "document_id": "r05-d2",
+     "grade": 3,
+     "quote": "Up to five unused days carry over into the next year and expire on March 31."
+    }
+   ],
+   "history": [
+    {
+     "answer": "Full-time employees accrue twenty-five days of annual leave per year.",
+     "user_message": "How many vacation days do I get?"
+    }
+   ],
+   "id": "r05-q4",
+   "question": "What happens to the ones I don't use?",
+   "search_query": "What happens to vacation days I don't use?"
+  },
+  {
+   "answerable": true,
+   "category": "ambiguous_no_answer",
+   "family": "r05-leave",
+   "gold": [
+    {
+     "document_id": "r05-d2",
+     "grade": 2,
+     "quote": "Managers may approve unpaid leave of up to three months for personal reasons."
+    },
+    {
+     "document_id": "r05-d1",
+     "grade": 1,
+     "quote": "Leave can be taken in up to three blocks within the first year."
+    },
+    {
+     "document_id": "r05-d2",
+     "grade": 2,
+     "quote": "Up to five unused days carry over into the next year and expire on March 31."
+    },
+    {
+     "document_id": "r05-d1",
+     "grade": 2,
+     "quote": "Employees may return on a reduced schedule of sixty percent for the first four weeks at full pay."
+    },
+    {
+     "document_id": "r05-d2",
+     "grade": 2,
+     "quote": "Sick leave is unlimited for illnesses shorter than five consecutive working days. Longer absences need a note from a medical professional."
+    }
+   ],
+   "history": [],
+   "id": "r05-q5",
+   "question": "Can I take more time?",
+   "search_query": "Can I take more time?"
+  },
+  {
+   "answerable": false,
+   "category": "ambiguous_no_answer",
+   "family": "r05-leave",
+   "gold": [
+    {
+     "document_id": "r05-d2",
+     "grade": 1,
+     "quote": "Managers may approve unpaid leave of up to three months for personal reasons."
+    }
+   ],
+   "history": [],
+   "id": "r05-q6",
+   "question": "Does Larkspur offer a sabbatical after ten years of service?",
+   "search_query": "Does Larkspur offer a sabbatical after ten years of service?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r06-retention",
+   "gold": [
+    {
+     "document_id": "r06-d1",
+     "grade": 3,
+     "quote": "Application logs are kept for thirty days."
+    }
+   ],
+   "history": [],
+   "id": "r06-q1",
+   "question": "How long are application logs kept?",
+   "search_query": "How long are application logs kept?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r06-retention",
+   "gold": [
+    {
+     "document_id": "r06-d1",
+     "grade": 3,
+     "quote": "Customer analytics data is kept for as long as the customer's contract is active and deleted ninety days after the contract ends."
+    },
+    {
+     "document_id": "r06-d1",
+     "grade": 3,
+     "quote": "Financial records are kept for seven years to meet tax law."
+    }
+   ],
+   "history": [],
+   "id": "r06-q2",
+   "question": "How does the retention of analytics data compare with financial records?",
+   "search_query": "How does the retention of analytics data compare with financial records?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r06-retention",
+   "gold": [
+    {
+     "document_id": "r06-d2",
+     "grade": 3,
+     "quote": "Primary data is deleted within thirty days of confirmation."
+    },
+    {
+     "document_id": "r06-d2",
+     "grade": 3,
+     "quote": "The customer receives a deletion certificate once backups have also been purged."
+    },
+    {
+     "document_id": "r06-d2",
+     "grade": 3,
+     "quote": "Invoices and payment records are excluded from deletion requests because they are financial records."
+    },
+    {
+     "document_id": "r06-d1",
+     "grade": 2,
+     "quote": "Backups expire on their own schedule and are fully purged within thirty-five days of the primary deletion."
+    },
+    {
+     "document_id": "r06-d2",
+     "grade": 2,
+     "quote": "Support confirms the request in writing and starts deletion within five business days."
+    },
+    {
+     "document_id": "r06-d1",
+     "grade": 2,
+     "quote": "A legal hold suspends deletion for the data it names until the legal team releases the hold."
+    }
+   ],
+   "history": [],
+   "id": "r06-q3",
+   "question": "A customer wants all their data gone right now. What will actually be deleted, and when will they get proof?",
+   "search_query": "A customer wants all their data gone right now. What will actually be deleted, and when will they get proof?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r06-retention",
+   "gold": [
+    {
+     "document_id": "r06-d1",
+     "grade": 3,
+     "quote": "Holds are reviewed every six months."
+    }
+   ],
+   "history": [
+    {
+     "answer": "Yes, a legal hold suspends deletion for the data it names.",
+     "user_message": "Can anything stop the nightly deletion job?"
+    }
+   ],
+   "id": "r06-q4",
+   "question": "How often are those reviewed?",
+   "search_query": "How often are the exceptions that stop the nightly deletion job reviewed?"
+  },
+  {
+   "answerable": false,
+   "category": "ambiguous_no_answer",
+   "family": "r06-retention",
+   "gold": [],
+   "history": [],
+   "id": "r06-q5",
+   "question": "Which cloud region stores Larkspur's backups?",
+   "search_query": "Which cloud region stores Larkspur's backups?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r06-retention",
+   "gold": [
+    {
+     "document_id": "r06-d2",
+     "grade": 3,
+     "quote": "Requests are submitted through the support portal by an administrator of the customer account."
+    }
+   ],
+   "history": [],
+   "id": "r06-q6",
+   "question": "Who can submit a data deletion request for a customer?",
+   "search_query": "Who can submit a data deletion request for a customer?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r07-relocation",
+   "gold": [
+    {
+     "document_id": "r07-d1",
+     "grade": 3,
+     "quote": "The final working day at Alder Street is October 17, and Harbor Point opens on October 20."
+    }
+   ],
+   "history": [],
+   "id": "r07-q1",
+   "question": "When does the Harbor Point office open?",
+   "search_query": "When does the Harbor Point office open?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r07-relocation",
+   "gold": [
+    {
+     "document_id": "r07-d1",
+     "grade": 3,
+     "quote": "Harbor Point has eighty parking spaces, allocated by a quarterly lottery. Bicycle storage has room for sixty bicycles and includes showers."
+    }
+   ],
+   "history": [],
+   "id": "r07-q2",
+   "question": "How does the parking at Harbor Point compare with bicycle storage?",
+   "search_query": "How does the parking at Harbor Point compare with bicycle storage?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r07-relocation",
+   "gold": [
+    {
+     "document_id": "r07-d1",
+     "grade": 3,
+     "quote": "IT moves monitors, docks and desk phones; do not pack them yourself."
+    },
+    {
+     "document_id": "r07-d1",
+     "grade": 2,
+     "quote": "Pack personal items and paper files in the labeled crates."
+    },
+    {
+     "document_id": "r07-d1",
+     "grade": 3,
+     "quote": "Everyone works from home on October 18 and 19 while movers relocate equipment."
+    },
+    {
+     "document_id": "r07-d1",
+     "grade": 2,
+     "quote": "The final working day at Alder Street is October 17, and Harbor Point opens on October 20."
+    }
+   ],
+   "history": [],
+   "id": "r07-q3",
+   "question": "What should I do with my desk setup during the move, and where do I work in the meantime?",
+   "search_query": "What should I do with my desk setup during the move, and where do I work in the meantime?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r07-relocation",
+   "gold": [
+    {
+     "document_id": "r07-d2",
+     "grade": 3,
+     "quote": "The fourth floor has twelve meeting rooms, including two rooms for twenty people."
+    }
+   ],
+   "history": [
+    {
+     "answer": "Larkspur occupies the third and fourth floors.",
+     "user_message": "Which floors are ours at Harbor Point?"
+    }
+   ],
+   "id": "r07-q4",
+   "question": "How many meeting rooms are up there?",
+   "search_query": "How many meeting rooms are on our floors at Harbor Point?"
+  },
+  {
+   "answerable": true,
+   "category": "ambiguous_no_answer",
+   "family": "r07-relocation",
+   "gold": [
+    {
+     "document_id": "r07-d1",
+     "grade": 2,
+     "quote": "The final working day at Alder Street is October 17, and Harbor Point opens on October 20."
+    },
+    {
+     "document_id": "r07-d2",
+     "grade": 2,
+     "quote": "Coffee and fruit are provided; lunch is catered on Wednesdays."
+    },
+    {
+     "document_id": "r07-d1",
+     "grade": 2,
+     "quote": "Packing crates are delivered on October 6."
+    },
+    {
+     "document_id": "r07-d1",
+     "grade": 2,
+     "quote": "Everyone works from home on October 18 and 19 while movers relocate equipment."
+    },
+    {
+     "document_id": "r07-d2",
+     "grade": 2,
+     "quote": "Visitors check in at the ground floor reception, which is staffed from 7:30 to 18:30."
+    },
+    {
+     "document_id": "r07-d1",
+     "grade": 2,
+     "quote": "The Portland team moves from the Alder Street office to the new Harbor Point building in the autumn."
+    }
+   ],
+   "history": [],
+   "id": "r07-q5",
+   "question": "When is it?",
+   "search_query": "When is it?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r07-relocation",
+   "gold": [
+    {
+     "document_id": "r07-d2",
+     "grade": 3,
+     "quote": "Coffee and fruit are provided; lunch is catered on Wednesdays."
+    }
+   ],
+   "history": [],
+   "id": "r07-q6",
+   "question": "Is lunch at Harbor Point catered every day like coffee is?",
+   "search_query": "Is lunch at Harbor Point catered every day like coffee is?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r08-customer-research",
+   "gold": [
+    {
+     "document_id": "r08-d1",
+     "grade": 3,
+     "quote": "The research team interviewed twenty-four customers between July and September about how they use Larkspur dashboards."
+    }
+   ],
+   "history": [],
+   "id": "r08-q1",
+   "question": "How many customers were interviewed in the Q3 research?",
+   "search_query": "How many customers were interviewed in the Q3 research?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r08-customer-research",
+   "gold": [
+    {
+     "document_id": "r08-d1",
+     "grade": 3,
+     "quote": "Eighteen of the twenty-four customers export dashboards to spreadsheets at least weekly, mostly to combine Larkspur data with their own budget figures."
+    },
+    {
+     "document_id": "r08-d1",
+     "grade": 3,
+     "quote": "Only three customers used the alerting feature, and most did not know it existed."
+    }
+   ],
+   "history": [],
+   "id": "r08-q2",
+   "question": "Which was more common among interviewed customers: exporting to spreadsheets or using alerts?",
+   "search_query": "Which was more common among interviewed customers: exporting to spreadsheets or using alerts?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r08-customer-research",
+   "gold": [
+    {
+     "document_id": "r08-d1",
+     "grade": 3,
+     "quote": "The team recommends a native spreadsheet connector, a viewer audit log for regulated customers, and an onboarding tour that introduces alerting."
+    },
+    {
+     "document_id": "r08-d1",
+     "grade": 2,
+     "quote": "Customers in healthcare asked repeatedly for audit trails that show who viewed a dashboard."
+    },
+    {
+     "document_id": "r08-d1",
+     "grade": 2,
+     "quote": "Eighteen of the twenty-four customers export dashboards to spreadsheets at least weekly, mostly to combine Larkspur data with their own budget figures."
+    },
+    {
+     "document_id": "r08-d1",
+     "grade": 2,
+     "quote": "Only three customers used the alerting feature, and most did not know it existed."
+    },
+    {
+     "document_id": "r08-d1",
+     "grade": 2,
+     "quote": "The most common complaint was slow loading of dashboards with more than twenty charts."
+    },
+    {
+     "document_id": "r08-d1",
+     "grade": 2,
+     "quote": "Several customers described the sharing dialog as confusing because it mixes viewers and editors in one list."
+    }
+   ],
+   "history": [],
+   "id": "r08-q3",
+   "question": "Based on the research, what should the product team build next and what problems would that solve?",
+   "search_query": "Based on the research, what should the product team build next and what problems would that solve?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r08-customer-research",
+   "gold": [
+    {
+     "document_id": "r08-d2",
+     "grade": 3,
+     "quote": "Each participant received a 100 US dollar gift card."
+    }
+   ],
+   "history": [
+    {
+     "answer": "From active accounts with at least ten weekly users; each received a gift card.",
+     "user_message": "How were participants recruited for the Q3 interviews?"
+    }
+   ],
+   "id": "r08-q4",
+   "question": "How much was the card worth?",
+   "search_query": "How much was the gift card worth for the Q3 interview participants?"
+  },
+  {
+   "answerable": false,
+   "category": "ambiguous_no_answer",
+   "family": "r08-customer-research",
+   "gold": [],
+   "history": [],
+   "id": "r08-q5",
+   "question": "What was the Net Promoter Score in the Q3 research?",
+   "search_query": "What was the Net Promoter Score in the Q3 research?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r08-customer-research",
+   "gold": [
+    {
+     "document_id": "r08-d2",
+     "grade": 3,
+     "quote": "Notes were coded independently by both researchers, and disagreements were resolved in a joint session."
+    },
+    {
+     "document_id": "r08-d2",
+     "grade": 2,
+     "quote": "Two researchers attended every session, one leading and one taking notes."
+    },
+    {
+     "document_id": "r08-d2",
+     "grade": 2,
+     "quote": "Participants were recruited from active accounts with at least ten weekly users."
+    },
+    {
+     "document_id": "r08-d1",
+     "grade": 2,
+     "quote": "The research team interviewed twenty-four customers between July and September about how they use Larkspur dashboards."
+    }
+   ],
+   "history": [],
+   "id": "r08-q6",
+   "question": "How trustworthy are the Q3 findings, given how the study was run?",
+   "search_query": "How trustworthy are the Q3 findings, given how the study was run?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r09-data-api",
+   "gold": [
+    {
+     "document_id": "r09-d1",
+     "grade": 3,
+     "quote": "Standard accounts may send 600 requests per minute."
+    }
+   ],
+   "history": [],
+   "id": "r09-q1",
+   "question": "What is the API rate limit for standard accounts?",
+   "search_query": "What is the API rate limit for standard accounts?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r09-data-api",
+   "gold": [
+    {
+     "document_id": "r09-d1",
+     "grade": 3,
+     "quote": "Standard accounts may send 600 requests per minute. Enterprise accounts may send 3,000 requests per minute."
+    }
+   ],
+   "history": [],
+   "id": "r09-q2",
+   "question": "How do standard and enterprise API rate limits compare?",
+   "search_query": "How do standard and enterprise API rate limits compare?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r09-data-api",
+   "gold": [
+    {
+     "document_id": "r09-d1",
+     "grade": 3,
+     "quote": "Version three is the current version; version two was deprecated in January and retires at the end of July."
+    },
+    {
+     "document_id": "r09-d1",
+     "grade": 3,
+     "quote": "Clients that need longer to migrate can request an extension of up to six months through their account manager, which is granted for enterprise accounts that have a written migration plan."
+    },
+    {
+     "document_id": "r09-d1",
+     "grade": 2,
+     "quote": "During an extension the retired version keeps working for that account only and is excluded from the standard availability commitment"
+    },
+    {
+     "document_id": "r09-d1",
+     "grade": 2,
+     "quote": "After retirement, requests to a retired version receive HTTP 410 Gone with a link to the migration guide, and no data is returned."
+    },
+    {
+     "document_id": "r09-d1",
+     "grade": 2,
+     "quote": "The Python and JavaScript client libraries handle all three changes automatically from release 4.0 onwards, so clients that use a current library usually only need to upgrade the library and run their tests."
+    },
+    {
+     "document_id": "r09-d1",
+     "grade": 2,
+     "quote": "Larkspur support can review a migration plan on request, and enterprise customers can schedule a call with an API engineer to discuss unusual integrations."
+    },
+    {
+     "document_id": "r09-d1",
+     "grade": 2,
+     "quote": "When a version is deprecated, every response from it carries a Deprecation header with the retirement date, and account administrators receive an email ninety days before retirement and again thirty days before retirement."
+    }
+   ],
+   "history": [],
+   "id": "r09-q3",
+   "question": "We're still on version two of the API. What's our timeline and what are our options if we can't migrate in time?",
+   "search_query": "We're still on version two of the API. What's our timeline and what are our options if we can't migrate in time?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r09-data-api",
+   "gold": [
+    {
+     "document_id": "r09-d1",
+     "grade": 3,
+     "quote": "A request over the limit receives HTTP 429 with a Retry-After header in seconds."
+    }
+   ],
+   "history": [
+    {
+     "answer": "You get HTTP 429 with a Retry-After header.",
+     "user_message": "What happens if I exceed the API rate limit?"
+    }
+   ],
+   "id": "r09-q4",
+   "question": "What unit is that header in?",
+   "search_query": "What unit is the API rate limit header in?"
+  },
+  {
+   "answerable": true,
+   "category": "ambiguous_no_answer",
+   "family": "r09-data-api",
+   "gold": [
+    {
+     "document_id": "r09-d1",
+     "grade": 2,
+     "quote": "Tokens expire after ninety days and can be revoked at any time."
+    },
+    {
+     "document_id": "r09-d1",
+     "grade": 2,
+     "quote": "A version is supported for at least eighteen months after its successor is released."
+    },
+    {
+     "document_id": "r09-d1",
+     "grade": 2,
+     "quote": "Version three is the current version; version two was deprecated in January and retires at the end of July."
+    },
+    {
+     "document_id": "r09-d1",
+     "grade": 2,
+     "quote": "Clients that need longer to migrate can request an extension of up to six months through their account manager"
+    }
+   ],
+   "history": [],
+   "id": "r09-q5",
+   "question": "How long until it expires?",
+   "search_query": "How long until it expires?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r09-data-api",
+   "gold": [
+    {
+     "document_id": "r09-d2",
+     "grade": 3,
+     "quote": "Queries that take longer than thirty seconds return a job identifier that you can poll."
+    }
+   ],
+   "history": [
+    {
+     "answer": "POST to /v3/queries with the dataset identifier and a SQL statement.",
+     "user_message": "How do I run a query through the API?"
+    }
+   ],
+   "id": "r09-q6",
+   "question": "What if it takes a long time?",
+   "search_query": "What if an API query takes a long time to run?"
+  },
+  {
+   "answerable": true,
+   "category": "fact",
+   "family": "r10-lab-safety",
+   "gold": [
+    {
+     "document_id": "r10-d1",
+     "grade": 3,
+     "quote": "Flammable solvents are stored in the yellow cabinet and never above eye level."
+    }
+   ],
+   "history": [],
+   "id": "r10-q1",
+   "question": "Where are flammable solvents stored in the Fenwick lab?",
+   "search_query": "Where are flammable solvents stored in the Fenwick lab?"
+  },
+  {
+   "answerable": true,
+   "category": "comparison",
+   "family": "r10-lab-safety",
+   "gold": [
+    {
+     "document_id": "r10-d1",
+     "grade": 3,
+     "quote": "Small spills under one liter are cleaned with the spill kit by the person who caused them. Larger spills require evacuating the room and calling the site safety officer."
+    }
+   ],
+   "history": [],
+   "id": "r10-q2",
+   "question": "What's the difference in how small and large spills are handled?",
+   "search_query": "What's the difference in how small and large spills are handled?"
+  },
+  {
+   "answerable": true,
+   "category": "synthesis",
+   "family": "r10-lab-safety",
+   "gold": [
+    {
+     "document_id": "r10-d2",
+     "grade": 3,
+     "quote": "New users complete a two-hour safety course and a supervised session before they receive badge access."
+    },
+    {
+     "document_id": "r10-d2",
+     "grade": 3,
+     "quote": "Nobody may handle chemicals alone in the lab after 19:00."
+    },
+    {
+     "document_id": "r10-d2",
+     "grade": 2,
+     "quote": "Nitrile gloves and a lab coat are required when handling any chemical."
+    },
+    {
+     "document_id": "r10-d2",
+     "grade": 2,
+     "quote": "Safety glasses are required at all times."
+    }
+   ],
+   "history": [],
+   "id": "r10-q3",
+   "question": "I'm new and want to do chemical calibration work in the Fenwick lab in the evening. What do I need?",
+   "search_query": "I'm new and want to do chemical calibration work in the Fenwick lab in the evening. What do I need?"
+  },
+  {
+   "answerable": true,
+   "category": "follow_up",
+   "family": "r10-lab-safety",
+   "gold": [
+    {
+     "document_id": "r10-d1",
+     "grade": 3,
+     "quote": "Larger deliveries go to the central store."
+    }
+   ],
+   "history": [
+    {
+     "answer": "No more than ten liters of flammable solvent at any time.",
+     "user_message": "How much solvent can we keep in the Fenwick lab?"
+    }
+   ],
+   "id": "r10-q4",
+   "question": "Where does the rest go?",
+   "search_query": "Where does solvent go beyond what the Fenwick lab may keep?"
+  },
+  {
+   "answerable": false,
+   "category": "ambiguous_no_answer",
+   "family": "r10-lab-safety",
+   "gold": [],
+   "history": [],
+   "id": "r10-q5",
+   "question": "What is the fire suppression system in the Fenwick lab?",
+   "search_query": "What is the fire suppression system in the Fenwick lab?"
+  },
+  {
+   "answerable": false,
+   "category": "ambiguous_no_answer",
+   "family": "r10-lab-safety",
+   "gold": [
+    {
+     "document_id": "r10-d1",
+     "grade": 1,
+     "quote": "Exceptions are approved by the site safety officer and posted on the lab door."
+    }
+   ],
+   "history": [],
+   "id": "r10-q6",
+   "question": "Who is the current site safety officer at Fenwick?",
+   "search_query": "Who is the current site safety officer at Fenwick?"
+  }
+ ]
+}
