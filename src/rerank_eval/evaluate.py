@@ -94,7 +94,11 @@ def _mean(values: Sequence[float]) -> float | None:
     return sum(values) / len(values) if values else None
 
 
-def evaluate(results: Mapping[str, Any], root: Path = ROOT) -> dict[str, Any]:
+def evaluate(
+    results: Mapping[str, Any], root: Path = ROOT, top_k: int | None = None
+) -> dict[str, Any]:
+    """Score a result file; ``top_k`` cuts every query to that original-order prefix, so
+    implementations measured on different TopK compare on the same candidates."""
     corpus, queries, pools = load(root)
     documents = {d["id"]: d["text"] for d in corpus["documents"]}
     chunks = {c["ref"]: c for c in pools["chunks"]}
@@ -116,7 +120,11 @@ def evaluate(results: Mapping[str, Any], root: Path = ROOT) -> dict[str, Any]:
         answers = answers_by_query.get(query["id"])
         if answers is None:
             continue
-        refs = [ref for ref, _ in pools["pools"][query["id"]]][: len(answers)]
+        size = len(answers) if top_k is None else top_k
+        if size > len(answers):
+            raise ValueError(f"{query['id']}: the results cover only {len(answers)} candidates")
+        refs = [ref for ref, _ in pools["pools"][query["id"]]][:size]
+        answers = {ref: answers[ref] for ref in refs if ref in answers}
         pool_grades = [grade(span(r), gold) for r in refs]
         relevant = pooled_relevant([span(r) for r in refs], gold)
         row: dict[str, Any] = {"category": query["category"]}
@@ -177,6 +185,7 @@ def evaluate(results: Mapping[str, Any], root: Path = ROOT) -> dict[str, Any]:
     interval = paired_bootstrap(deltas)
     return {
         "model": results.get("model"),
+        "top_k": top_k,
         "overall": overall,
         "bootstrap_95": interval,
         "categories": categories,
@@ -211,8 +220,9 @@ def evaluate(results: Mapping[str, Any], root: Path = ROOT) -> dict[str, Any]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("results", type=Path)
+    parser.add_argument("--top-k", type=int, help="score only this original-order prefix")
     args = parser.parse_args()
-    report = evaluate(json.loads(args.results.read_text("utf-8")))
+    report = evaluate(json.loads(args.results.read_text("utf-8")), top_k=args.top_k)
     print(json.dumps(report, indent=2, ensure_ascii=False))
 
 

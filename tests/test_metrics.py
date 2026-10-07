@@ -71,3 +71,24 @@ def test_the_published_llm_results_reproduce() -> None:
     # Ranked recall falls in the ambiguous/no-answer category, so that gate fails.
     assert report["gates"]["recall_not_lower"] is False
     assert report["gates"]["mean_improvement"] and report["gates"]["lower_bound_above_zero"]
+
+
+def test_a_top_k_prefix_compares_implementations_on_the_same_candidates() -> None:
+    jev = json.loads((ROOT / "results/jev-1.13.0.json").read_text("utf-8"))
+    report = evaluate(jev, top_k=60)
+    assert report["top_k"] == 60
+    assert round(report["overall"]["reranked"]["ndcg@10"], 3) == 0.919
+    llm = json.loads((ROOT / "results/gpt-6-luna-medium.json").read_text("utf-8"))
+    # A result measured on 60 candidates cannot be scored as if it had 150.
+    with pytest.raises(ValueError, match="cover only"):
+        evaluate(llm, top_k=150)
+
+
+def test_the_published_clef_results_reproduce() -> None:
+    results = json.loads((ROOT / "results/clef.json").read_text("utf-8"))
+    report = evaluate(results)
+    assert round(report["overall"]["delta_ndcg@10"], 3) == 0.098
+    low, high = report["bootstrap_95"]
+    assert (round(low, 3), round(high, 3)) == (0.022, 0.172)
+    assert report["gates"]["recall_not_lower"] is False
+    assert report["gates"]["category_regression"] is True
